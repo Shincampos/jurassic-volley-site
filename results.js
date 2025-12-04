@@ -1,4 +1,4 @@
-const apiKey = 'patQ4fEuvjEX05PHx.cf31ed791fbac42e2e35d96c0f6551f932b4419eceeb506e7faf20b6f5863b98';
+
 const baseId = 'appajBYutiTd1acc9';
 const tableName = 'Calendario';
 
