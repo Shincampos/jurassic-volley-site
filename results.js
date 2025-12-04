@@ -1,4 +1,4 @@
-
+const apiKey = 'REPLACE_WITH_SERVERLESS'; // non usato nel frontend
 const baseId = 'appajBYutiTd1acc9';
 const tableName = 'Calendario';
 
