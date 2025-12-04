@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classifica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="risultati-page">
+    <header class="header-page">
+        <div class="header-content">
+            <img src="logo-jurassic.jpg" alt="Jurassic Volley" class="logo-page">
+            <h1>Classifica Serie C Maschile</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="results.html">Risultati</a></li>
+                <li><a href="classifica.html">Classifica</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Un solo blocco con stesso stile delle giornate -->
+        <div class="giornata-block classifica-block">
+            <h2 class="giornata-titolo">CLASSIFICA</h2>
+            <table id="classifica" class="calendario-table">
+                <thead>
+                    <tr>
+                        <th>Pos.</th>
+                        <th>Squadra</th>
+                        <th>Punti (set vinti)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Righe classifica inserite da JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="classifica.js"></script>
+</body>
+</html>

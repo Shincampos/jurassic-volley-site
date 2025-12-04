@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squadra di Pallavolo</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        main {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10%;
+            color: white;
+            font-size: 30px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .snowflake:nth-child(1) { left: 10%; animation-duration: 10s; }
+        .snowflake:nth-child(2) { left: 20%; animation-duration: 12s; }
+        .snowflake:nth-child(3) { left: 30%; animation-duration: 14s; }
+        .snowflake:nth-child(4) { left: 40%; animation-duration: 11s; }
+        .snowflake:nth-child(5) { left: 50%; animation-duration: 13s; }
+        .snowflake:nth-child(6) { left: 60%; animation-duration: 15s; }
+        .snowflake:nth-child(7) { left: 70%; animation-duration: 9s; }
+        .snowflake:nth-child(8) { left: 80%; animation-duration: 12s; }
+        .snowflake:nth-child(9) { left: 90%; animation-duration: 11s; }
+        .snowflake:nth-child(10) { left: 50%; animation-duration: 10s; }
+    </style>
+</head>
+
+<body class="home-page">
+    <!--
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+        <div class="snowflake">❄</div>
+    </div>
+    -->
+
+    <header class="header-home">
+        <img src="logo-jurassic.jpg" alt="Jurassic Volley" class="logo-home">
+        <h1>JURASSIC VOLLEY</h1>
+        <nav>
+            <ul>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="results.html">Risultati</a></li>
+                <li><a href="classifica.html">Classifica</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>SERIE C MASCHILE ABRUZZO</h2>
+    </main>
+
+    <footer>
+    </footer>
+
+    <script>
+    // Qui puoi aggiungere eventuali funzioni JavaScript future
+    </script>
+</body>
+</html>
