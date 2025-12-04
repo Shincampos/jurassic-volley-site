@@ -1,38 +1,31 @@
-const apiKey = 'REPLACE_WITH_SERVERLESS'; // non usato nel frontend
-const baseId = 'appajBYutiTd1acc9';
-const tableName = 'Calendario';
+// classifica.js – usa funzione Netlify, nessun token lato client
 
-
-// Fetch da stessa vista "Grid view" usata per calendario/risultati
+// Fetch da stessa vista "Grid view" tramite funzione Netlify
 function fetchClassificaData() {
-    const viewName = 'Grid view';
-
-    fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?view=${encodeURIComponent(viewName)}`, {
-        headers: {
-            Authorization: `Bearer ${apiKey}`
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Dati ricevuti da Airtable:", data);
-        if (data.error) {
+    fetch('/.netlify/functions/airtable-classifica')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Dati ricevuti dalla funzione Netlify:", data);
+            if (data.error) {
+                const tbody = document.querySelector('#classifica tbody');
+                tbody.innerHTML = `<tr><td colspan="3">Errore: ${data.error}</td></tr>`;
+                return;
+            }
+            populateClassificaTable(data.records);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
             const tbody = document.querySelector('#classifica tbody');
-            tbody.innerHTML = `<tr><td colspan="3">Errore: ${data.error.message}</td></tr>`;
-            return;
-        }
-        populateClassificaTable(data.records);
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-        const tbody = document.querySelector('#classifica tbody');
-        tbody.innerHTML = '<tr><td colspan="3">Errore nel caricamento della classifica.</td></tr>';
-    });
+            tbody.innerHTML = '<tr><td colspan="3">Errore nel caricamento della classifica.</td></tr>';
+        });
 }
+
+
 // Aggrega punti classifica per squadra (3-0/3-1 = 3 punti; 3-2 = 2-1) e popola la tabella
 function populateClassificaTable(records) {
     const tbody = document.querySelector('#classifica tbody');

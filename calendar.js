@@ -1,42 +1,35 @@
-const apiKey = 'REPLACE_WITH_SERVERLESS'; // non usato nel frontend
-const baseId = 'appajBYutiTd1acc9';
-const tableName = 'Calendario';
+// calendar.js – usa funzione Netlify, nessun token lato client
 
-// FETCH usando la vista "Grid view"
+// FETCH usando la vista "Grid view" tramite funzione Netlify
 function fetchCalendarData() {
-    const viewName = 'Grid view';
-
-    fetch(`https://api.airtable.com/v0/${baseId}/${tableName}?view=${encodeURIComponent(viewName)}`, {
-        headers: {
-            Authorization: `Bearer ${apiKey}`
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(json => {
-        console.log(json);
-        if (json.error) {
+    fetch('/.netlify/functions/airtable-results')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(json => {
+            console.log('Calendario (funzione Netlify):', json);
+            if (json.error) {
+                document.getElementById('calendar-container').innerText =
+                    'Errore: ' + json.error;
+                return;
+            }
+            renderCalendar(json.records);
+        })
+        .catch(error => {
+            console.error('Errore fetch calendario:', error);
             document.getElementById('calendar-container').innerText =
-                "Errore: " + json.error.message;
-            return;
-        }
-        renderCalendar(json.records);
-    })
-    .catch(error => {
-        console.error(error);
-        document.getElementById('calendar-container').innerText =
-            "Errore nel caricamento del calendario.";
-    });
+                'Errore nel caricamento del calendario.';
+        });
 }
+
 
 // RENDER: ogni 4 record consecutivi = 1 giornata
 function renderCalendar(records) {
     const container = document.getElementById('calendar-container');
-    container.innerHTML = "";
+    container.innerHTML = '';
 
     const matchesPerDay = 4;
     const totalDays = Math.ceil(records.length / matchesPerDay);
@@ -47,7 +40,7 @@ function renderCalendar(records) {
         const partite = records.slice(start, end);
 
         const block = document.createElement('div');
-        block.className = "giornata-block";
+        block.className = 'giornata-block';
 
         block.innerHTML = `
             <h2 class="giornata-titolo">GIORNATA ${day + 1}</h2>
@@ -64,11 +57,11 @@ function renderCalendar(records) {
                 <tbody>
                     ${partite.map(p => `
                         <tr>
-                            <td>${p.fields["IN CASA"] || ""}</td>
-                            <td>${p.fields["FUORI CASA"] || ""}</td>
-                            <td>${p.fields["Data"] || ""}</td>
-                            <td>${p.fields["Giorno"] || ""}</td>
-                            <td>${p.fields["Ora"] || ""}</td>
+                            <td>${p.fields['IN CASA'] || ''}</td>
+                            <td>${p.fields['FUORI CASA'] || ''}</td>
+                            <td>${p.fields['Data'] || ''}</td>
+                            <td>${p.fields['Giorno'] || ''}</td>
+                            <td>${p.fields['Ora'] || ''}</td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -77,6 +70,7 @@ function renderCalendar(records) {
         container.appendChild(block);
     }
 }
+
 
 // Avvio
 fetchCalendarData();

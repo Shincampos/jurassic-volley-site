@@ -1,39 +1,28 @@
-const apiKey = 'REPLACE_WITH_SERVERLESS'; // non usato nel frontend
-const baseId = 'appajBYutiTd1acc9';
-const tableName = 'Calendario';
+// results.js – accesso tramite funzione Netlify, nessun token lato client
 
-
-// 1. Fetch risultati dalla vista "Grid view"
+// 1. Fetch risultati dalla funzione Netlify
 function fetchResultsData() {
-    const viewName = 'Grid view';
-    const url = 'https://api.airtable.com/v0/' + baseId + '/' + tableName +
-                '?view=' + encodeURIComponent(viewName);
-
-    fetch(url, {
-        headers: {
-            Authorization: 'Bearer ' + apiKey
-        }
-    })
-    .then(function (response) {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(function (json) {
-        console.log('Risultati Airtable:', json);
-        if (json.error) {
+    fetch('/.netlify/functions/airtable-results')
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(function (json) {
+            console.log('Risultati (funzione Netlify):', json);
+            if (json.error) {
+                document.getElementById('results-container').innerText =
+                    'Errore: ' + json.error;
+                return;
+            }
+            renderResults(json.records);
+        })
+        .catch(function (error) {
+            console.error('Errore fetch risultati:', error);
             document.getElementById('results-container').innerText =
-                'Errore: ' + json.error.message;
-            return;
-        }
-        renderResults(json.records);
-    })
-    .catch(function (error) {
-        console.error('Errore fetch risultati:', error);
-        document.getElementById('results-container').innerText =
-            'Errore nel caricamento dei risultati.';
-    });
+                'Errore nel caricamento dei risultati.';
+        });
 }
 
 
@@ -94,6 +83,7 @@ function renderResults(records) {
                     '<td>' + quintoText  + '</td>' +
                 '</tr>';
         });
+
         block.innerHTML =
             '<h2 class="giornata-titolo">GIORNATA ' + (day + 1) + '</h2>' +
             '<table class="calendario-table">' +
