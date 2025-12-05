@@ -396,7 +396,7 @@ section {
         margin-bottom: 8px;
     }
 
-    /* Blocchi calendario / risultati / classifica leggermente dentro al viewport */
+    /* Blocchi centrati, ma senza costringere troppo la tabella */
     #calendar-container,
     #results-container,
     .giornata-block,
@@ -410,41 +410,42 @@ section {
         box-sizing: border-box;
     }
 
-    /* Tabelle a tutta larghezza dentro il blocco, con layout fisso */
+    /* Contenitore scrollabile orizzontale per le tabelle */
+    .giornata-block,
+    .classifica-block {
+        overflow-x: auto;
+    }
+
     .calendario-table,
     .classifica-block table {
-        width: 100%;
-        max-width: 100%;
-        table-layout: fixed;
+        width: max-content;     /* lascia respirare le colonne */
+        min-width: 100%;        /* almeno la larghezza del blocco */
+        table-layout: auto;     /* niente layout fisso */
     }
 
     .calendario-table th,
     .calendario-table td,
     .classifica-block th,
     .classifica-block td {
-        font-size: 12px;
-        padding: 4px 2px;
+        font-size: 13px;
+        padding: 6px 4px;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
-    /* Larghezze colonne più strette per farle rientrare */
+    /* Elimina le larghezze fisse delle colonne in mobile */
     .calendario-table th:nth-child(1),
-    .calendario-table td:nth-child(1) { width: 22%; }
-
+    .calendario-table td:nth-child(1),
     .calendario-table th:nth-child(2),
-    .calendario-table td:nth-child(2) { width: 22%; }
-
+    .calendario-table td:nth-child(2),
     .calendario-table th:nth-child(3),
-    .calendario-table td:nth-child(3) { width: 10%; }
-
+    .calendario-table td:nth-child(3),
     .calendario-table th:nth-child(n+4),
-    .calendario-table td:nth-child(n+4) { width: 7%; }
+    .calendario-table td:nth-child(n+4) {
+        width: auto;
+    }
 
     main {
         height: calc(100vh - 200px);
         margin-top: 200px;
     }
 }
-
